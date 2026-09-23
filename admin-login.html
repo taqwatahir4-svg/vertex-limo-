@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Login — Vertex Limousine</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:Arial, sans-serif; background:#0d0d0d; min-height:100vh; display:flex; align-items:center; justify-content:center;}
+  .box{background:#fff; padding:40px 35px; border-radius:8px; width:100%; max-width:360px;}
+  .box h1{font-size:1.4rem; margin-bottom:6px; color:#0d0d0d;}
+  .box p{color:#777; font-size:.85rem; margin-bottom:25px;}
+  input{width:100%; padding:12px; margin-bottom:14px; border:1px solid #ccc; border-radius:4px; font-size:.95rem;}
+  button{width:100%; padding:13px; background:#0d0d0d; color:#fff; border:none; border-radius:4px; font-size:1rem; cursor:pointer;}
+  button:hover{background:#c9a24b; color:#000;}
+  #error{color:#c0392b; font-size:.85rem; margin-bottom:10px; display:none;}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>Admin Login</h1>
+  <p>Vertex Limousine — Booking Dashboard</p>
+  <div id="error"></div>
+  <input type="email" id="email" placeholder="Admin Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button id="loginBtn">Log In</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  // Same config as index.html — paste your real Firebase project config here
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // If already logged in, go straight to dashboard
+  auth.onAuthStateChanged(user => {
+    if (user) window.location.href = "admin-dashboard.html";
+  });
+
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errorBox = document.getElementById('error');
+    errorBox.style.display = 'none';
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => { window.location.href = "admin-dashboard.html"; })
+      .catch(err => {
+        errorBox.textContent = "Login failed: " + err.message;
+        errorBox.style.display = 'block';
+      });
+  });
+</script>
+</body>
+</html>

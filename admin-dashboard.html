@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard — Vertex Limousine</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:Arial, sans-serif; background:#f4f4f4; color:#1a1a1a;}
+  header{display:flex; justify-content:space-between; align-items:center; background:#0d0d0d; color:#fff; padding:18px 5%;}
+  header h1{font-size:1.2rem;}
+  #logoutBtn{background:#c9a24b; color:#000; border:none; padding:9px 18px; border-radius:4px; cursor:pointer; font-weight:bold;}
+  main{padding:30px 5%;}
+  .stats{display:flex; gap:15px; margin-bottom:25px; flex-wrap:wrap;}
+  .stat-card{background:#fff; padding:16px 22px; border-radius:8px; min-width:140px;}
+  .stat-card .num{font-size:1.6rem; font-weight:bold; color:#c9a24b;}
+  table{width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden;}
+  th, td{padding:12px 10px; text-align:left; font-size:.85rem; border-bottom:1px solid #eee;}
+  th{background:#0d0d0d; color:#fff;}
+  select{padding:6px; border-radius:4px; border:1px solid #ccc;}
+  .del-btn{background:#c0392b; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:.8rem;}
+  .del-btn:hover{background:#992d22;}
+  #loading, #empty{text-align:center; padding:40px; color:#777;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Vertex Limousine — Bookings Dashboard</h1>
+  <button id="logoutBtn">Log Out</button>
+</header>
+
+<main>
+  <div class="stats" id="statsRow"></div>
+  <div id="loading">Loading bookings...</div>
+  <div id="empty" style="display:none;">No bookings yet.</div>
+  <table id="bookingsTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Name</th><th>Phone</th><th>Date</th><th>Time</th><th>Pickup</th><th>Drop-off</th><th>Vehicle</th><th>Pax</th><th>Status</th><th></th>
+      </tr>
+    </thead>
+    <tbody id="bookingsBody"></tbody>
+  </table>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  // Same config as index.html — paste your real Firebase project config here
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Protect this page — redirect to login if not authenticated
+  auth.onAuthStateChanged(user => {
+    if (!user) window.location.href = "admin-login.html";
+    else loadBookings();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    auth.signOut().then(() => window.location.href = "admin-login.html");
+  });
+
+  function loadBookings() {
+    db.collection("bookings").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+      const body = document.getElementById('bookingsBody');
+      const loading = document.getElementById('loading');
+      const empty = document.getElementById('empty');
+      const table = document.getElementById('bookingsTable');
+      const statsRow = document.getElementById('statsRow');
+      loading.style.display = 'none';
+
+      if (snapshot.empty) {
+        empty.style.display = 'block';
+        table.style.display = 'none';
+        statsRow.innerHTML = '';
+        return;
+      }
+      empty.style.display = 'none';
+      table.style.display = 'table';
+
+      body.innerHTML = '';
+      let counts = { Pending: 0, Confirmed: 0, Completed: 0, Cancelled: 0 };
+
+      snapshot.forEach(doc => {
+        const b = doc.data();
+        const status = b.status || 'Pending';
+        counts[status] = (counts[status] || 0) + 1;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${b.name || ''}</td>
+          <td>${b.phone || ''}</td>
+          <td>${b.date || ''}</td>
+          <td>${b.time || ''}</td>
+          <td>${b.pickup || ''}</td>
+          <td>${b.dropoff || ''}</td>
+          <td>${b.vehicle || ''}</td>
+          <td>${b.passengers || 'N/A'}</td>
+          <td>
+            <select data-id="${doc.id}" class="statusSelect">
+              <option${status==='Pending'?' selected':''}>Pending</option>
+              <option${status==='Confirmed'?' selected':''}>Confirmed</option>
+              <option${status==='Completed'?' selected':''}>Completed</option>
+              <option${status==='Cancelled'?' selected':''}>Cancelled</option>
+            </select>
+          </td>
+          <td><button class="del-btn" data-id="${doc.id}">Delete</button></td>
+        `;
+        body.appendChild(row);
+      });
+
+      statsRow.innerHTML = Object.entries(counts).map(([k,v]) =>
+        `<div class="stat-card"><div class="num">${v}</div><div>${k}</div></div>`
+      ).join('');
+
+      document.querySelectorAll('.statusSelect').forEach(sel => {
+        sel.addEventListener('change', () => {
+          db.collection("bookings").doc(sel.dataset.id).update({ status: sel.value });
+        });
+      });
+      document.querySelectorAll('.del-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (confirm('Delete this booking?')) {
+            db.collection("bookings").doc(btn.dataset.id).delete();
+          }
+        });
+      });
+    });
+  }
+</script>
+</body>
+</html>

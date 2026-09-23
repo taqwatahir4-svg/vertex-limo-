@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vertex Limousine — Luxury Chauffeur Service</title>
+<style>
+  :root{
+    --black:#0d0d0d; --gold:#c9a24b; --gray:#f4f4f4; --text:#1a1a1a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Helvetica Neue', Arial, sans-serif; background:#fff; color:var(--text); line-height:1.6;}
+  header{display:flex; justify-content:space-between; align-items:center; padding:20px 6%; background:var(--black); color:#fff; position:sticky; top:0; z-index:10;}
+  header .logo{font-size:1.5rem; font-weight:bold; letter-spacing:1px;}
+  header .logo span{color:var(--gold);}
+  nav a{color:#fff; text-decoration:none; margin-left:22px; font-size:.9rem;}
+  nav a:hover{color:var(--gold);}
+
+  .hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1400&q=80') center/cover; color:#fff; text-align:center; padding:120px 6% 100px;}
+  .hero h1{font-size:2.6rem; max-width:750px; margin:0 auto 15px;}
+  .hero p{max-width:600px; margin:0 auto 30px; opacity:.9;}
+  .btn{display:inline-block; padding:14px 30px; margin:6px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:.9rem; letter-spacing:.5px;}
+  .btn-primary{background:var(--gold); color:#000;}
+  .btn-secondary{border:2px solid #fff; color:#fff;}
+
+  section{padding:70px 6%; max-width:1150px; margin:0 auto;}
+  section h2{font-size:2rem; margin-bottom:10px; text-align:center;}
+  section .subtitle{text-align:center; color:#777; margin-bottom:40px;}
+
+  .services-grid, .fleet-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:25px;}
+  .card{background:var(--gray); padding:28px; border-radius:8px; text-align:center;}
+  .card h3{margin-bottom:10px; color:var(--black);}
+  .card .icon{font-size:2rem; margin-bottom:12px;}
+
+  .fleet-grid img{width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0;}
+  .fleet-card{background:var(--gray); border-radius:8px; overflow:hidden;}
+  .fleet-card .info{padding:18px;}
+  .fleet-card .price{color:var(--gold); font-weight:bold; margin-top:6px;}
+
+  form{max-width:600px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  form input, form select, form textarea{padding:12px; border:1px solid #ccc; border-radius:4px; font-family:inherit; width:100%;}
+  form textarea, form button{grid-column:1 / -1;}
+  form button{background:var(--black); color:#fff; border:none; padding:14px; border-radius:4px; font-size:1rem; cursor:pointer;}
+  form button:hover{background:var(--gold); color:#000;}
+
+  .testimonials{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px;}
+  .testimonial{background:var(--gray); padding:24px; border-radius:8px; font-style:italic;}
+  .testimonial .name{margin-top:14px; font-weight:bold; font-style:normal; color:var(--gold);}
+
+  .gallery-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;}
+  .gallery-grid img{width:100%; height:180px; object-fit:cover; border-radius:6px;}
+
+  footer{background:var(--black); color:#ccc; padding:50px 6% 25px; text-align:center;}
+  footer p{margin:6px 0;}
+  footer .copyright{margin-top:25px; font-size:.8rem; opacity:.6;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">VERTEX<span>LIMOUSINE</span></div>
+  <nav>
+    <a href="#fleet">Fleet</a>
+    <a href="#services">Services</a>
+    <a href="#booking">Book Now</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Luxury travel, on your schedule.</h1>
+  <p>Premium chauffeur-driven limousines for weddings, airport transfers, corporate events, and nights out — professional, punctual, discreet.</p>
+  <a href="#booking" class="btn btn-primary">Book a Ride</a>
+  <a href="#fleet" class="btn btn-secondary">View Fleet</a>
+</section>
+
+<section id="services">
+  <h2>Our Services</h2>
+  <p class="subtitle">Tailored transportation for every occasion</p>
+  <div class="services-grid">
+    <div class="card"><div class="icon">✈️</div><h3>Airport Transfers</h3><p>On-time pickups and drop-offs with flight tracking.</p></div>
+    <div class="card"><div class="icon">💍</div><h3>Weddings</h3><p>Elegant arrivals for the bride, groom, and wedding party.</p></div>
+    <div class="card"><div class="icon">🏢</div><h3>Corporate Travel</h3><p>Reliable transport for executives and business events.</p></div>
+    <div class="card"><div class="icon">🎉</div><h3>Special Events</h3><p>Proms, parties, and nights out in style.</p></div>
+  </div>
+</section>
+
+<section id="fleet">
+  <h2>Our Fleet</h2>
+  <p class="subtitle">Choose the vehicle that fits your occasion</p>
+  <div class="fleet-grid">
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=500&q=80" alt="Stretch Limousine">
+      <div class="info"><h3>Stretch Limousine</h3><p>Seats up to 10, ideal for weddings & parties.</p><div class="price">From Rs. 8,000/hr</div></div>
+    </div>
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=500&q=80" alt="Executive Sedan">
+      <div class="info"><h3>Executive Sedan</h3><p>Seats up to 3, perfect for airport & business trips.</p><div class="price">From Rs. 3,500/hr</div></div>
+    </div>
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=500&q=80" alt="Luxury SUV">
+      <div class="info"><h3>Luxury SUV</h3><p>Seats up to 6, spacious and comfortable.</p><div class="price">From Rs. 5,500/hr</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <h2>Book Your Ride</h2>
+  <p class="subtitle">Fill the form and we'll confirm within minutes</p>
+  <form id="bookingForm" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="booking">
+    <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+    <input type="text" name="name" id="name" placeholder="Full Name" required>
+    <input type="tel" name="phone" id="phone" placeholder="Phone Number" required pattern="[0-9+\-\s]{7,15}" title="Enter a valid phone number">
+    <input type="date" name="date" id="date" placeholder="Pickup Date" required>
+    <input type="time" name="time" id="time" placeholder="Pickup Time" required>
+    <input type="text" name="pickup" id="pickup" placeholder="Pickup Location" required>
+    <input type="text" name="dropoff" id="dropoff" placeholder="Drop-off Location" required>
+    <select name="vehicle" id="vehicle">
+      <option>Stretch Limousine</option>
+      <option>Executive Sedan</option>
+      <option>Luxury SUV</option>
+    </select>
+    <input type="number" name="passengers" id="passengers" placeholder="Number of Passengers" min="1" max="20">
+    <textarea name="notes" id="notes" placeholder="Additional notes (optional)" rows="3"></textarea>
+    <div id="formError" style="grid-column:1/-1; color:#c0392b; font-size:.85rem; display:none;"></div>
+    <button type="submit" id="submitBtn">Request Booking</button>
+  </form>
+
+  <!-- Firebase SDK (for saving bookings to a database) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    // 1) Go to https://console.firebase.google.com → Create a project (free)
+    // 2) Project Settings → General → scroll to "Your apps" → click Web icon (</>) → register app
+    // 3) Copy the config values it gives you and paste them below
+    // 4) In Firebase Console → Build → Firestore Database → Create database (start in test mode)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+  <script>
+    const WHATSAPP_NUMBER = "923000000000"; // <-- replace with your real WhatsApp business number (country code, no + or spaces)
+
+    const form = document.getElementById('bookingForm');
+    const errorBox = document.getElementById('formError');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+
+      // Basic validation
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const pickup = document.getElementById('pickup').value.trim();
+      const dropoff = document.getElementById('dropoff').value.trim();
+
+      if (!name || !phone || !date || !time || !pickup || !dropoff) {
+        errorBox.textContent = "Please fill in all required fields.";
+        errorBox.style.display = 'block';
+        return;
+      }
+      if (!/^[0-9+\-\s]{7,15}$/.test(phone)) {
+        errorBox.textContent = "Please enter a valid phone number.";
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      const vehicle = document.getElementById('vehicle').value;
+      const passengers = document.getElementById('passengers').value || "N/A";
+      const notes = document.getElementById('notes').value.trim() || "None";
+
+      const formData = new FormData(form);
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      const bookingData = {
+        name, phone, date, time, pickup, dropoff, vehicle, passengers, notes,
+        status: "Pending",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      // 1) Save booking to Firestore database
+      db.collection("bookings").add(bookingData)
+        .then(() => {
+          // 2) Submit to Netlify Forms (captures entry + triggers email notification if enabled in Netlify site settings)
+          return fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString()
+          });
+        })
+        .then(() => {
+          // 3) Open WhatsApp with pre-filled booking details
+          const message = encodeURIComponent(
+            `New Booking Request:\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}\nPickup: ${pickup}\nDrop-off: ${dropoff}\nVehicle: ${vehicle}\nPassengers: ${passengers}\nNotes: ${notes}`
+          );
+          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+
+          alert("Booking submitted successfully! We'll contact you shortly.");
+          form.reset();
+        })
+        .catch((err) => {
+          console.error(err);
+          errorBox.textContent = "Something went wrong. Please try again or contact us directly.";
+          errorBox.style.display = 'block';
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Request Booking";
+        });
+    });
+  </script>
+</section>
+
+<section id="reviews">
+  <h2>What Clients Say</h2>
+  <div class="testimonials">
+    <div class="testimonial">"Punctual, professional, and the car was spotless. Made our wedding day feel even more special."<div class="name">— Jennifer Collins</div></div>
+    <div class="testimonial">"Used them for airport pickup — driver was waiting exactly on time. Will book again."<div class="name">— Michael Turner</div></div>
+    <div class="testimonial">"Great for our corporate event. Smooth booking process and courteous chauffeur."<div class="name">— Sarah Mitchell</div></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery-grid">
+    <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=400&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=400&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=400&q=80" alt="">
+  </div>
+</section>
+
+<footer id="contact">
+  <p>📍 [Add your office address, city]</p>
+  <p>📞 [Add your booking phone number]</p>
+  <p>✉️ bookings@vertexlimousine.com</p>
+  <p>Available 24/7 for reservations</p>
+  <p class="copyright">© 2026 Vertex Limousine. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
